@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Elysium-navigation</title>
+    <link rel="stylesheet" href="../../part 2/button.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="menu-btn">
+            <button type="button"><i class="material-icons">menu</i></button>
+        </div>
+        <div class="menu">
+            <div class="row">
+                <div class="col-lg overlay hidden">
+                    <h1>Elysium</h1>
+                    <div class="nav">
+                        <ul>
+                            <li><div class="logo"></div></li>
+                            <li><a href="../../part 1/relevant.html" target="_parent">Home</a></li>
+                            <li><a href="../../part 2/roadview.html" target="_parent">Road view</a></li>
+                            <li><a href="../../part 2/overview.html" target="_parent">Over view</a></li>
+                            <li><a href="../../part 2/postview.html" target="_parent">Post view</a></li>
+                            <li><a href="../../part 2/about.html" target="_parent">About</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var t1 = new TimelineMax({paused: true});
+
+        t1.to(".overlay", 1, {
+            opacity: 1,
+            ease: Expo.easeInOut
+        });
+
+        t1.staggerFrom(".menu ul li", 0.8, {y: 60, opacity: 0, ease: Expo.easeOut}, 0.1);
+
+        t1.reverse();
+        $(document).on("click", ".menu-btn", function() {
+            t1.reversed(!t1.reversed());
+            if (t1.reversed()){
+                $(".overlay").addClass("hidden"); 
+                $("body").css("overflow", "auto"); 
+            } else {
+                $(".overlay").removeClass("hidden"); 
+                $("body").css("overflow", "hidden");  
+            }
+        });
+    </script>
+</body>
+</html>

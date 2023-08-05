@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elysium-home page</title>
+    <link rel="stylesheet" href="../../part 1/relevant.css">
+    <style>
+        .menu__item-content {
+            display: none;
+        }
+        .menu__item-content.active {
+            display: block;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <nav class="menu">
+        <div class="menu__item" id="roadviewMenuItem">
+            <div class="menu__item-image_wrapper">
+                <div class="menu__item-image_inner">
+                    <video class="menu__item-image" src="../../part 2/video/roadview.mp4" muted loop></video>
+                </div>
+            </div>
+            <a class="menu__item-text" href="../../part 2/roadview.html">
+                <span class="menu__item-innertext">Road view /</span>
+            </a>
+            <div class="menu__item-content" id="roadviewContent"></div>
+        </div>
+
+        <div class="menu__item">
+            <div class="menu__item-image_wrapper">
+                <div class="menu__item-image_inner">
+                    <video class="menu__item-image" src="../../part 2/video/overview.mp4" muted loop></video>
+                </div>
+            </div>
+            <a class="menu__item-text" href="../../part 2/overview.html">
+                <span class="menu__item-innertext">Over view</span>
+            </a>
+            <div class="menu__item-content" id="overviewContent"></div>
+        </div>
+        <br />
+
+        <div class="menu__item">
+            <div class="menu__item-image_wrapper">
+                <div class="menu__item-image_inner">
+                    <video class="menu__item-image" src="../../part 2/video/postview.mp4" muted loop></video>
+                </div>
+            </div>
+            <a class="menu__item-text" href="../../part 2/postview.html">
+                <span class="menu__item-innertext">Post view /</span>
+            </a>
+            <div class="menu__item-content" id="postviewContent"></div>
+        </div>
+        <div class="menu__item">
+            <div class="menu__item-image_wrapper">
+                <div class="menu__item-image_inner">
+                    <video class="menu__item-image" src="../../part 2/video/about.mp4" muted loop></video>
+                </div>
+            </div>
+            <a class="menu__item-text" href="../../part 2/about.html">
+                <span class="menu__item-innertext">&nbsp;About</span>
+            </a>
+            <div class="menu__item-content" id="aboutContent"></div>
+        </div>
+    </nav>
+  </div>
+  <script src="relevant.js"></script>
+
+  <script>
+      function showSection(sectionId) {
+          var sections = document.getElementsByClassName('menu__item-content');
+          for (var i = 0; i < sections.length; i++) {
+              sections[i].classList.remove('active');
+          }
+
+          var selectedSection = document.getElementById(sectionId + 'Content');
+          selectedSection.classList.add('active');
+
+          var menuButtons = document.querySelectorAll('.menu__item-text');
+          for (var i = 0; i < menuButtons.length; i++) {
+              menuButtons[i].style.color = '#a7a7a7';
+          }
+
+          var activeButton = document.querySelector('.menu__item-text[href="../../part 2/' + sectionId + '.html"]');
+          activeButton.style.color = '#000000';
+      }
+
+      var menuItems = document.querySelectorAll('.menu__item');
+      menuItems.forEach(function (item) {
+          var itemText = item.querySelector('.menu__item-text');
+          var sectionId = itemText.getAttribute('href').replace('.html', '').replace('../../part 2/', '');
+
+          item.addEventListener('mouseenter', function () {
+              itemText.style.color = '#000000';
+              item.querySelector('.menu__item-image').play();
+          });
+
+          item.addEventListener('mouseleave', function () {
+              itemText.style.color = '#a7a7a7';
+              item.querySelector('.menu__item-image').pause();
+          });
+
+          item.addEventListener('click', function (event) {
+              event.preventDefault(); 
+              window.location.href = itemText.getAttribute('href');
+          });
+      });
+  </script>
+</body>
+</html>

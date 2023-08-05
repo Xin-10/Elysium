@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>D-life</title>
+        <style>
+            body { margin: 0; }
+            canvas { display: block; }
+        </style>
+    </head>
+    <body>
+        <script src="https://threejs.org/build/three.js"></script>
+        <script src="app.js"></script>
+    </body>
+</html>

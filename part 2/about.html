@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Elysium-about</title>
+    <link rel="stylesheet" href="../../part 2/button.css">
+    <link rel="stylesheet" href="../../part 2/about.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="menu-btn">
+            <button type="button"><i class="material-icons">menu</i></button>
+        </div>
+        <div class="menu">
+            <div class="row">
+                <div class="col-lg overlay hidden">
+                    <h1>Elysium</h1>
+                    <div class="nav">
+                        <ul>
+                            <li><div class="logo"></div></li>
+                            <li><a href="../../part 1/relevant.html" target="_parent">Home</a></li>
+                            <li><a href="../../part 2/roadview.html" target="_parent">Road view</a></li>
+                            <li><a href="../../part 2/overview.html" target="_parent">Over view</a></li>
+                            <li><a href="../../part 2/postview.html" target="_parent">Post view</a></li>
+                            <li><a href="../../part 2/about.html" target="_parent">About</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="interactive-notice">Try drawing on the screen</div>
+    <div class="custom-container">
+        <div class="col"></div>
+        <div class="col">
+                <div>
+              <p>
+              Welcome to Elysium, a revolutionary platform offering a unique <br />
+              e-memorial service that preserves and celebrates the lives of <br />
+              your departed loved ones. At Elysium, we utilize comprehensive <br />
+              data provided by you to craft bespoke life stories and create <br />
+              digital avatars that offer an interactive experience, allowing <br />
+              the memory of In the future, Elysium aspires to offer the ability <br />
+              for individuals to plan ahead, uploading their life's journey and <br />
+              essence, thereby transforming into digital citizens after death.<br />
+              These digital citizens will not only continue to interact with <br />
+              the world through their virtual presence but also contribute <br />
+              economically, with their digital creations generating value that <br />
+              can be shared with their chosen beneficiaries.Join us in our <br />
+              journey of redefining remembrance and envisioning an enduring <br />
+              digital life beyond the mortal realm. At Elysium, we believe in a<br />
+              future where death is not an end, but a transition to a new form of <br />
+              existence.<br />
+            </p>
+            <br />
+            <p><u>Service</u></p>
+            <p>E-Memorials</p>
+            <p>Life Story Curation</p>
+            <p>Interactive Digital Avatars</p>
+            <p>Online Remembrance Space</p>
+            </p>
+            <br />
+            <p><u>Future</u></p>
+            <p>End-of-life Digital Transition Planning</p>
+            <p>Posthumous Digital Citizenship</p>
+            <p>Digital Legacy Continuation</p>
+            <p>Economic Activity from Digital Citizens</p>
+            <p>Legacy Distribution Management</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <canvas id="draw"></canvas>
+
+    <div class="interactive-notice">Try drawing on the screen</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var t1 = new TimelineMax({ paused: true });
+
+        t1.to(".overlay", 1, {
+            opacity: 1,
+            ease: Expo.easeInOut
+        });
+
+        t1.staggerFrom(".menu ul li", 0.8, { y: 60, opacity: 0, ease: Expo.easeOut }, 0.1);
+
+        t1.reverse();
+        $(document).on("click", ".menu-btn", function () {
+            t1.reversed(!t1.reversed());
+            if (t1.reversed()) {
+                $(".overlay").addClass("hidden");
+                $("body").css("overflow", "auto");
+            } else {
+                $(".overlay").removeClass("hidden");
+                $("body").css("overflow", "hidden");
+            }
+        });
+    </script>
+
+    <script>
+      const canvas = document.querySelector("canvas");
+      const ctx = canvas.getContext("2d");
+    
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    
+      ctx.lineJoin = "round";
+      ctx.lineCap = "round";
+      ctx.lineWidth = 100;
+    
+      let isDrawing = false;
+      let lastX = 0;
+      let lastY = 0;
+      let hue = 170; 
+      let saturation = 40; 
+      let lightness = 85; 
+      let direction = true;
+    
+      function draw(e) {
+        if (!isDrawing) return;
+        
+        ctx.strokeStyle = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+    
+        if (direction) {
+            hue++;
+            saturation++;
+            lightness--;
+            if(hue > 250 || saturation > 100 || lightness < 45) { 
+                direction = !direction;
+            }
+        } else {
+            hue--;
+            saturation--;
+            lightness++;
+            if(hue < 170 || saturation < 40 || lightness > 85) { 
+                direction = !direction;
+            }
+        }
+      }
+    
+      function clearCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    
+      canvas.addEventListener("mousedown", (e) => {
+        isDrawing = true;
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+      });
+    
+      canvas.addEventListener("mousemove", draw);
+      canvas.addEventListener("mouseup", () => {
+        isDrawing = false;
+        clearCanvas();
+      });
+    
+      canvas.addEventListener("mouseout", () => {
+        isDrawing = false;
+        clearCanvas();
+      });
+    </script>
+  </body>
+</html>

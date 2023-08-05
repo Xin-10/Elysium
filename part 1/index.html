@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Elysium-loading Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(45deg, #4F96EC, #FFFFFF);
+            color: #000000;
+            font-family: Arial, sans-serif;
+            font-size: 3em;
+        }
+
+        #counter {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #counterNumber {
+            position: absolute;
+            z-index: 2;
+        }
+
+        .circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            stroke: #000;
+            fill: transparent;
+            stroke-width: 1;
+            stroke-dasharray: 629;
+            stroke-dashoffset: 629;
+            animation: draw 5800ms linear forwards;
+            animation-iteration-count: 1;
+            transition: opacity 1s; 
+        }
+
+        @keyframes draw {
+            from {
+                stroke-dashoffset: 629;
+            }
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="counter">
+        <div id="counterNumber">100</div>
+        <svg class="circle" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="49"></circle>
+        </svg>
+    </div>
+
+    <script>
+        var counterNumber = document.getElementById('counterNumber');
+        var circle = document.querySelector('.circle');
+        var count = 100;
+
+        var countdown = setInterval(function() {
+            count--;
+            counterNumber.innerText = count;
+
+            if(count <= 0) {
+                clearInterval(countdown);
+                counterNumber.style.color = "transparent";
+                circle.style.opacity = 0;
+                setTimeout(function() {
+                    window.location.href = 'homepage.html';
+                }, 1000); 
+            }
+        }, 25); 
+    </script>
+</body>
+</html>

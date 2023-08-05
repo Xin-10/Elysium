@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elysium-post view</title>
+    
+    <link rel="stylesheet" href="../../part 2/button.css">
+    
+    <link rel="stylesheet" href="../../part 2/postview.css">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/MotionPathPlugin.min.js"></script>
+    
+    <script src="https://assets.codepen.io/16327/Flip.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="menu-btn">
+            <button type="button"><i class="material-icons">menu</i></button>
+        </div>
+        <div class="menu">
+            <div class="row">
+                <div class="col-lg overlay hidden"> 
+                    <h1>Elysium</h1>
+                    <div class="nav">
+                        <ul>
+                            <li><div class="logo"></div></li>
+                            <li><a href="../../part 1/relevant.html" target="_parent">Home</a></li>
+                            <li><a href="../../part 2/roadview.html" target="_parent">Road view</a></li>
+                            <li><a href="../../part 2/overview.html" target="_parent">Over view</a></li>
+                            <li><a href="../../part 2/postview.html" target="_parent">Post view</a></li>
+                            <li><a href="../../part 2/about.html" target="_parent">About</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header">
+      <h1>
+        Eliza Sullivan's, <br />
+        life Moments
+      </h1>
+    </div>
+    <section class="slider-section">
+      <div class="wheel">
+        <div class="wheel__card">
+          <img src="../../part 2/User story/1/Childhood.png" alt="Childhood">
+        </div>
+        <div class="wheel__card">
+        <img src="../../part 2/User story/2/Teenager.png" alt="Teenager">
+        </div>
+        <div class="wheel__card">
+          <img src="../../part 2/User story/3/Highschool.png" alt="Highschool">
+        </div>
+        <div class="wheel__card">
+          <img src="../../part 2/User story/4/University-1.png" alt="University-1">
+        </div>
+        <div class="wheel__card">
+          <img src="../../part 2/User story/5/Marriage.png" alt="Marriage">
+        </div>
+        <div class="wheel__card">
+          <img src="../../part 2/User story/6/Family life-1.png" alt="Family life-1">
+        </div>
+        <div class="wheel__card">
+          <img src="../../part 2/User story/7/Restart-1.png" alt="Restart-1">
+        </div>
+        <div class="wheel__card">
+          <img src="../../part 2/User story/8/ill-1.png" alt="ill-1">
+        </div>
+        <div class="wheel__card">
+          <img src="../../part 2/User story/9/Friend-1.png" alt="Friend-1">
+        </div>
+        <div class="wheel__card">
+          <img src="../../part 2/User story/10/Book cover.png" alt="Book cover">
+        </div>
+    </section>
+
+    <div class="scroll-down">Scroll to view</div>
+    <div class="scroll-down-icon">
+      <img
+        src="https://storage.googleapis.com/studio-design-asset-files/projects/BXaxK3jMq7/s-61x9_2c6bd15e-43e5-4ebf-bf39-a6ff23fb93dd.svg"
+        alt=""
+      />
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var t1 = new TimelineMax({ paused: true });
+
+        t1.to(".overlay", 1, {
+            opacity: 1,
+            ease: Expo.easeInOut
+        });
+
+        t1.staggerFrom(".menu ul li", 0.8, { y: 60, opacity: 0, ease: Expo.easeOut }, 0.1);
+
+        t1.reverse();
+        $(document).on("click", ".menu-btn", function () {
+            t1.reversed(!t1.reversed());
+            if (t1.reversed()) {
+                $(".overlay").addClass("hidden"); 
+                $("body").css("overflow", "auto");
+            } else {
+                $(".overlay").removeClass("hidden"); 
+                $("body").css("overflow", "hidden");
+            }
+        });
+    </script>
+
+    <script>
+      gsap.registerPlugin("ScrollTrigger");
+
+      let wheel = document.querySelector(".wheel");
+      let images = gsap.utils.toArray(".wheel__card");
+
+      function setup() {
+        let radius = wheel.offsetWidth / 2;
+        let center = wheel.offsetWidth / 2;
+        let total = images.length;
+        let slice = (2 * Math.PI) / total;
+
+        images.forEach((item, i) => {
+          let angle = i * slice;
+
+          let x = center + radius * Math.sin(angle);
+          let y = center - radius * Math.cos(angle);
+
+          gsap.set(item, {
+            rotation: angle + "_rad",
+            xPercent: -50,
+            yPercent: -50,
+            x: x,
+            y: y,
+          });
+        });
+      }
+
+      gsap.to(".wheel", {
+        rotate: () => -360,
+        ease: "none",
+        duration: images.length,
+        scrollTrigger: {
+          start: 0,
+          end: "max",
+          scrub: 1,
+          snap: 1 / images.length,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      setup();
+      window.addEventListener("resize", setup);
+    </script>
+  </body>
+</html>
